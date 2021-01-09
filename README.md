@@ -2,7 +2,7 @@
 
 The Alexa Skills Kit now allows developers to build skills that play long-form audio content on Alexa devices.  This sample project demonstrates how to use the new interfaces for triggering playback of audio and handling audio player input events.
 
-## How to Run the Sample
+## Building the code
 
 1. Clone the project and package the skill:
 ```bash
