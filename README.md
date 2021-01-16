@@ -1,8 +1,25 @@
 # radio-sai-alexa-skill-V2
 
-The Alexa Skills Kit now allows developers to build skills that play long-form audio content on Alexa devices.  This sample project demonstrates how to use the new interfaces for triggering playback of audio and handling audio player input events.
+The Alexa Skills Kit allows developers to build skills that play long-form audio content on Alexa devices.  This sample project demonstrates how to use the new interfaces for triggering playback of audio and handling audio player input events.  The code in this repository shows how to build a skill to stream all audio streams of RadioSai, teh official streaming service of Sri Sathya Sai Media Center.
 
 ## Building the code
+
+Follow teh isntructions below if you would like to build and deploy the skill using your own AWS Lambda account adn Amazon Alexa Developer Console.
+
+### Prerequisites
+
+#### Background Knowledge and infrstructure
+
+1. Working Knowledge of Javascript and Node.js
+2. Working knowledge of Git
+3. An AWS account
+4. An Alexa Developer Account
+
+#### Software
+
+1. GitHub Desktop - https://desktop.github.com/
+2. Node.js - https://nodejs.org/en/download/
+3. [AWS account](https://aws.amazon.com/free/?trk=ps_a134p000003yBfsAAE&trkCampaign=acq_paid_search_brand&sc_channel=ps&sc_campaign=acquisition_US&sc_publisher=google&sc_category=core&sc_country=US&sc_geo=NAMER&sc_outcome=acq&sc_detail=%2Bcreate%20%2Baws%20%2Baccount&sc_content=Account_bmm&sc_segment=438195700988&sc_medium=ACQ-P|PS-GO|Brand|Desktop|SU|AWS|Core|US|EN|Text&s_kwcid=AL!4422!3!438195700988!b!!g!!%2Bcreate%20%2Baws%20%2Baccount&ef_id=CjwKCAiAuoqABhAsEiwAdSkVVCNvfMbJtagjxZ4WPlfrX61FoYWsMfTmerBmPM41H1QMeqacQEUsCRoCohIQAvD_BwE:G:s&s_kwcid=AL!4422!3!438195700988!b!!g!!%2Bcreate%20%2Baws%20%2Baccount&all-free-tier.sort-by=item.additionalFields.SortRank&all-free-tier.sort-order=asc)
 
 1. Clone the project and package the skill:
 ```bash
