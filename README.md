@@ -2,9 +2,9 @@
 
 The Alexa Skills Kit allows developers to build skills that play long-form audio content on Alexa devices.  This sample project demonstrates how to use the new interfaces for triggering playback of audio and handling audio player input events.  The code in this repository shows how to build a skill to stream all audio streams of RadioSai, teh official streaming service of Sri Sathya Sai Media Center.
 
-## Building the code
+## Building and deploying the Skill
 
-Follow teh isntructions below if you would like to build and deploy the skill using your own AWS Lambda account adn Amazon Alexa Developer Console.
+Follow the isntructions below if you would like to build and deploy the skill using your own AWS Lambda account adn Amazon Alexa Developer Console.
 
 ### Prerequisites
 
@@ -17,9 +17,12 @@ Follow teh isntructions below if you would like to build and deploy the skill us
 
 #### Software
 
-1. GitHub Desktop - https://desktop.github.com/
-2. Node.js - https://nodejs.org/en/download/
-3. [AWS account](https://aws.amazon.com/free/?trk=ps_a134p000003yBfsAAE&trkCampaign=acq_paid_search_brand&sc_channel=ps&sc_campaign=acquisition_US&sc_publisher=google&sc_category=core&sc_country=US&sc_geo=NAMER&sc_outcome=acq&sc_detail=%2Bcreate%20%2Baws%20%2Baccount&sc_content=Account_bmm&sc_segment=438195700988&sc_medium=ACQ-P|PS-GO|Brand|Desktop|SU|AWS|Core|US|EN|Text&s_kwcid=AL!4422!3!438195700988!b!!g!!%2Bcreate%20%2Baws%20%2Baccount&ef_id=CjwKCAiAuoqABhAsEiwAdSkVVCNvfMbJtagjxZ4WPlfrX61FoYWsMfTmerBmPM41H1QMeqacQEUsCRoCohIQAvD_BwE:G:s&s_kwcid=AL!4422!3!438195700988!b!!g!!%2Bcreate%20%2Baws%20%2Baccount&all-free-tier.sort-by=item.additionalFields.SortRank&all-free-tier.sort-order=asc)
+1. [Download GitHub Desktop](https://desktop.github.com/)
+2. [Download Node.js](https://nodejs.org/en/download/)
+3. [Createe an AWS account](https://aws.amazon.com/free/?trk=ps_a134p000003yBfsAAE&trkCampaign=acq_paid_search_brand&sc_channel=ps&sc_campaign=acquisition_US&sc_publisher=google&sc_category=core&sc_country=US&sc_geo=NAMER&sc_outcome=acq&sc_detail=%2Bcreate%20%2Baws%20%2Baccount&sc_content=Account_bmm&sc_segment=438195700988&sc_medium=ACQ-P|PS-GO|Brand|Desktop|SU|AWS|Core|US|EN|Text&s_kwcid=AL!4422!3!438195700988!b!!g!!%2Bcreate%20%2Baws%20%2Baccount&ef_id=CjwKCAiAuoqABhAsEiwAdSkVVCNvfMbJtagjxZ4WPlfrX61FoYWsMfTmerBmPM41H1QMeqacQEUsCRoCohIQAvD_BwE:G:s&s_kwcid=AL!4422!3!438195700988!b!!g!!%2Bcreate%20%2Baws%20%2Baccount&all-free-tier.sort-by=item.additionalFields.SortRank&all-free-tier.sort-order=asc)
+4. [Create an Alexa Developer account](https://www.amazon.com/ap/signin?clientContext=135-5721390-3171116&openid.pape.preferred_auth_policies=Singlefactor&openid.pape.max_auth_age=7200&openid.return_to=https%3A%2F%2Fdeveloper.amazon.com%2Fen-US%2Falexa&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.assoc_handle=amzn_dante_us&openid.mode=checkid_setup&marketPlaceId=ATVPDKIKX0DER&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&)
+
+### Building and deploying the code
 
 1. Clone the project and package the skill:
 ```bash
