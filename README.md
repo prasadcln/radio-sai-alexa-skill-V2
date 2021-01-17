@@ -2,6 +2,8 @@
 
 The Alexa Skills Kit allows developers to build skills that play long-form audio content on Alexa devices.  This sample project demonstrates how to use the new interfaces for triggering playback of audio and handling audio player input events.  The code in this repository shows how to build a skill to stream all audio streams of RadioSai, teh official streaming service of Sri Sathya Sai Media Center.
 
+If you are new to building Skills for Alexa, [Read this Beginner tutorial](https://developer.amazon.com/en-US/alexa/alexa-skills-kit/get-deeper/tutorials-code-samples/build-an-engaging-alexa-skill)
+
 ## Building and deploying the Skill
 
 Follow the isntructions below if you would like to build and deploy the skill using your own AWS Lambda account adn Amazon Alexa Developer Console.
