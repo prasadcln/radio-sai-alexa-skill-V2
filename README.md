@@ -29,7 +29,7 @@ Follow the isntructions below if you would like to build and deploy the skill us
 1. Clone the project and package the skill:
 ```bash
 npm install
-zip -r ../audio-player.zip *
+zip -r ../radio-sai.zip *
 ```
 2. Create or login to an [AWS account](https://aws.amazon.com/). In the AWS Console:
 
