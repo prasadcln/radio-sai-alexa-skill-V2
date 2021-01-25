@@ -1,13 +1,15 @@
 {
-  "name": "audio-player",
-  "version": "1.0.0",
-  "description": "",
+  "name": "radio sai global harmony",
+  "version": "2.0.0",
+  "description": "Official Skill from Radio Sai",
   "main": "index.js",
   "scripts": {
     "test": "AWS_REGION=us-east-1 mocha test"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "radio sai global harmony"
+  ],
+  "author": "Radio Sai",
   "license": "ISC",
   "dependencies": {
     "ask-sdk": "^2.0.5",

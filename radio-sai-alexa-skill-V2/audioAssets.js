@@ -9,5 +9,4 @@ audioData.set('AfriStream', 'https://www.radiosai.org/Pages/AfriStream.pls');
 audioData.set('TeluguStream', 'https://www.radiosai.org/Pages/TeluguStream.pls');
 audioData.set('DiscourseStream', 'https://www.radiosai.org/Pages/DiscourseStream.pls');
 
-
 module.exports = audioData;
