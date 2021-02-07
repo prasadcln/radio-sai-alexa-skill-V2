@@ -19,8 +19,6 @@ const LaunchRequestHandler = {
     return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
   },
   handle(handlerInput) {
-    const playbackInfo = getPlaybackInfo(handlerInput);
-    const request = handlerInput.requestEnvelope.request;
     const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
     let message;
     let reprompt;
@@ -79,12 +77,8 @@ const AllIntentsHandler = {
 const PausePlaybackHandler = {
   canHandle(handlerInput) {
     const request = handlerInput.requestEnvelope.request;
-	console.log(request);
-	
 	if(request.type === 'IntentRequest' &&
       	(
-      		request.intent.name === 'AMAZON.StopIntent' ||
-        	request.intent.name === 'AMAZON.CancelIntent' ||
         	request.intent.name === 'AMAZON.PauseIntent'
         )
       ) {
@@ -94,15 +88,13 @@ const PausePlaybackHandler = {
         }
   },
   handle(handlerInput) {
-    return controller.stop(handlerInput);
+    return controller.pause(handlerInput);
   },
 };
 
 const ResumePlaybackHandler = {
   canHandle(handlerInput) {
     const request = handlerInput.requestEnvelope.request;
-	console.log(request);
-	
 	if(request.type === 'IntentRequest' &&
       	(
       		request.intent.name === 'AMAZON.ResumeIntent'
@@ -114,15 +106,13 @@ const ResumePlaybackHandler = {
         }
 	  },
 	  handle(handlerInput) {
-    	return controller.play(handlerInput);
+    	return controller.resume(handlerInput);
       },
   };
 
 const YesHandler = {
   canHandle(handlerInput) {
-    const playbackInfo = getPlaybackInfo(handlerInput);
     const request = handlerInput.requestEnvelope.request;
-
   	if(request.type === 'IntentRequest' &&
   		request.intent.name === 'AMAZON.YesIntent')
   	{
@@ -138,7 +128,6 @@ const YesHandler = {
 
 const NoHandler = {
   canHandle(handlerInput) {
-    const playbackInfo = getPlaybackInfo(handlerInput);
     const request = handlerInput.requestEnvelope.request;
 
   	if(request.type === 'IntentRequest' &&
@@ -190,9 +179,7 @@ const ExitHandler = {
     }    	
   },
   handle(handlerInput) {
-    return handlerInput.responseBuilder
-      .speak('Goodbye!')
-      .getResponse();
+      return controller.stop(handlerInput, 'Goodbye!');  
   },
 };
 
@@ -229,7 +216,7 @@ const ErrorHandler = {
     return true;
   },
   handle(handlerInput, error) {
-    console.log(`Error handled: ${error}`);
+    console.log(`Error handled for input ${handlerInput}, error is ${error}`);
     const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
     const message = requestAttributes.t('ERROR_MESSAGE');
 
@@ -281,6 +268,13 @@ const LocalizationInterceptor = {
 }
 };
 
+const LogRequestInterceptor = {
+  process(handlerInput) {
+    const request = handlerInput.requestEnvelope.request;
+	console.log(request);
+  },
+};
+
 const SavePersistentAttributesResponseInterceptor = {
   process(handlerInput) {
     handlerInput.attributesManager.savePersistentAttributes();
@@ -289,87 +283,93 @@ const SavePersistentAttributesResponseInterceptor = {
 
 /* HELPER FUNCTIONS */
 
-function getPlaybackInfo(handlerInput) {
-  const attributes = handlerInput.attributesManager.getPersistentAttributes();
-  return attributes.playbackInfo;
-}
-
-function canThrowCard(handlerInput) {
-  const {
-    requestEnvelope,
-    attributesManager
-  } = handlerInput;
-  const playbackInfo = getPlaybackInfo(handlerInput);
-
-  if (requestEnvelope.request.type === 'IntentRequest' && playbackInfo.playbackIndexChanged) {
-    playbackInfo.playbackIndexChanged = false;
-    return true;
-  }
-  return false;
-}
-
 const controller = {
   play(handlerInput) {
     const {
       attributesManager,
       responseBuilder
     } = handlerInput;
-
+    
     const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
     let streamName = handlerInput.requestEnvelope.request.intent.name;
     let streamUrl = audioData.get(streamName);
 
-    var playBehavior = 'REPLACE_ALL';
-    var playerMessage = requestAttributes.t(streamName + '_NOW_PLAYING');
-	var reprompt = requestAttributes.t('REPROMPT_MESSAGE');
+	let playerMessage = requestAttributes.t(streamName + '_NOW_PLAYING');
+	let reprompt = requestAttributes.t('REPROMPT_MESSAGE');
 
+    const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+    sessionAttributes.streamName = streamName;
+    sessionAttributes.streamUrl = streamUrl;
+	
+    var playBehavior = 'REPLACE_ALL';
+	
+    console.log(playerMessage + streamUrl);
     responseBuilder
       .speak(playerMessage)
+      .withShouldEndSession(false)
       .addAudioPlayerPlayDirective(playBehavior, streamUrl, streamName, 0, null);
     return responseBuilder.getResponse();
   },
-  stop(handlerInput) {
+  
+  resume(handlerInput) {
+    const {
+      attributesManager,
+      responseBuilder
+    } = handlerInput;
+  
+    const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+    let streamName = sessionAttributes.streamName;
+    let streamUrl = sessionAttributes.streamUrl;
+    
+    if(streamName == null) {
+      const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
+   	  let  message = requestAttributes.t('WELCOME_MESSAGE');
+      let reprompt = requestAttributes.t('REPROMPT_MESSAGE');
+
+	  return handlerInput.responseBuilder
+        .speak(message)
+        .reprompt(reprompt)
+        .getResponse();
+    }
+    
+    const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
+    let playerMessage = requestAttributes.t(streamName + '_NOW_PLAYING');
+	let reprompt = requestAttributes.t('REPROMPT_MESSAGE');
+    
+    var playBehavior = 'REPLACE_ALL';
+	
+    console.log(playerMessage + streamUrl);
+    responseBuilder
+      .speak(playerMessage)
+      .withShouldEndSession(false)
+      .addAudioPlayerPlayDirective(playBehavior, streamUrl, streamName, 0, null);
+    return responseBuilder.getResponse();
+  },
+
+  pause(handlerInput) {
+    const {
+      attributesManager,
+      responseBuilder
+    } = handlerInput;
+  
+    const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+    let streamName = sessionAttributes.streamName;
+    let streamUrl = sessionAttributes.streamUrl;
+  
+    return responseBuilder
+      .withShouldEndSession(false)
+      .addAudioPlayerStopDirective()
+      .getResponse();
+  },
+
+  stop(handlerInput, speakmessage) {
     return handlerInput.responseBuilder
+      .speak(speakmessage)
+      .withShouldEndSession(true)
       .addAudioPlayerStopDirective()
       .getResponse();
   },
 };
-
-function getToken(handlerInput) {
-  // Extracting token received in the request.
-  return handlerInput.requestEnvelope.request.token;
-}
-
-function getIndex(handlerInput) {
-  // Extracting index from the token received in the request.
-  const tokenValue = parseInt(handlerInput.requestEnvelope.request.token, 10);
-  const attributes = handlerInput.attributesManager.getPersistentAttributes();
-
-  return attributes.playbackInfo.playOrder.indexOf(tokenValue);
-}
-
-function getOffsetInMilliseconds(handlerInput) {
-  // Extracting offsetInMilliseconds received in the request.
-  return handlerInput.requestEnvelope.request.offsetInMilliseconds;
-}
-
-function shuffleOrder() {
-  const array = [...Array(constants.audioData.length).keys()];
-  let currentIndex = array.length;
-  let temp;
-  let randomIndex;
-  // Algorithm : Fisher-Yates shuffle
-  return new Promise((resolve) => {
-    while (currentIndex >= 1) {
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-      temp = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temp;
-    }
-    resolve(array);
-  });
-}
 
 const skillBuilder = alexa.SkillBuilders.standard();
 exports.handler = skillBuilder
@@ -386,7 +386,7 @@ exports.handler = skillBuilder
     ResumePlaybackHandler,
     ExitHandler
   )
-  .addRequestInterceptors(LocalizationInterceptor)
+  .addRequestInterceptors(LogRequestInterceptor, LocalizationInterceptor)
   .addResponseInterceptors(SavePersistentAttributesResponseInterceptor)
   .addErrorHandlers(ErrorHandler)
   .withAutoCreateTable(true)

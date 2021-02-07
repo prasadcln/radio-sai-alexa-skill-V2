@@ -2,11 +2,11 @@
 
 var audioData = new Map();
 
-audioData.set('BhajanStream', 'https://www.radiosai.org/Pages/BhajanStream.pls');
-audioData.set('AsiaStream', 'https://www.radiosai.org/Pages/AsiaStream.pls');
-audioData.set('AmeriStream', 'https://www.radiosai.org/Pages/AmeriStream.pls');
-audioData.set('AfriStream', 'https://www.radiosai.org/Pages/AfriStream.pls');
-audioData.set('TeluguStream', 'https://www.radiosai.org/Pages/TeluguStream.pls');
-audioData.set('DiscourseStream', 'https://www.radiosai.org/Pages/DiscourseStream.pls');
+audioData.set('BhajanStream', 'https://stream.sssmediacentre.org:8443/bhajan');
+audioData.set('DiscourseStream', 'https://stream.sssmediacentre.org:8443/discourse');
+audioData.set('AsiaStream', 'https://stream.sssmediacentre.org:8443/asia');
+audioData.set('AmeriStream', 'https://stream.sssmediacentre.org:8443/ameri');
+audioData.set('AfriStream', 'https://stream.sssmediacentre.org:8443/afri');
+audioData.set('TeluguStream', 'https://stream.sssmediacentre.org:8443/telugu');
 
 module.exports = audioData;
